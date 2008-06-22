@@ -32,7 +32,7 @@ module Snowblink
         doc.search("ol.episodes").each do |episode_list|
           episode_list.search("li").each do |episode_list_item|
             episode = Episode.new(@name, episode_list_item)
-            @episodes << episode unless @episodes.include?(episode)
+            @episodes << episode unless @episodes.any?{|ep| ep.pid == episode.pid}
           end
         end
       end
