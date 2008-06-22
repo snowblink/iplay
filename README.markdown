@@ -13,8 +13,5 @@ You can provide a different strategy to execute, by default it will tweet to the
 # Future
 - Allow multiple strategies
 
-# Assumptions
-This assumes that the atom feed of available iplayer shows is updated
-
 # License
 See LICENSE
