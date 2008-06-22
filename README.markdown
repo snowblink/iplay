@@ -2,7 +2,7 @@
 Created at Mashed 08 in the 24 hour hacking session. This lets you monitor programmes you like for when they are available on BBC iplayer.
 
 # Usage
-See check_doctor_who.rb for an example.
+See `check_doctor_who.rb` for an example.
 
 You need the brand pid for the show you want.
 This can be found by visiting:
