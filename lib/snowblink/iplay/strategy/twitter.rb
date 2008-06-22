@@ -18,7 +18,7 @@ module Snowblink
             conf.source               = ''
           end
 
-          twitter_config = YAML::load_file(File.dirname(__FILE__) + '/twitter_config.yml') rescue 'no file found'
+          twitter_config = YAML::load_file(File.dirname(__FILE__) + '/../../../../twitter_config.yml')
           @twitter = ::Twitter::Client.new(twitter_config)
         end
 

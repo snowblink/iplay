@@ -43,6 +43,15 @@ module Snowblink
           id.inner_text =~ /@pid/
         end
       end
+      
+      def iplayer_available?
+        begin
+          open("#{IPLAYER_URL}#{@pid}.shtml")
+          true
+        rescue
+          false
+        end
+      end
 
       def aired?
         Time.now > Time.local(*ParseDate.parsedate(@end_time))

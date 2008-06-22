@@ -11,7 +11,7 @@ module Snowblink
       BBC_PROGRAMMES_URL = 'http://www.bbc.co.uk/programmes/'
       UPDATE_INTERVAL = 300
 
-      attr_accessor :pid, :episodes
+      attr_accessor :pid, :episodes, :comingup_url
 
       def initialize(pid, strategy=Strategy::Twitter.new)
         @pid = pid || 'b006q2x0' # default to Doctor Who!
