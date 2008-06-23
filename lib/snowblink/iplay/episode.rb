@@ -25,7 +25,7 @@ module Snowblink
       def set_name_and_pid(details)
         details.search('div.summary').each do |summary|
           @name = [@series_name, summary.search('span.title').inner_text, summary.search('span.subtitle').inner_text].join(' - ')
-          @pid = summary.at('a.url').get_attribute('href').match(/[^\/]+$/)
+          @pid = summary.at('a.url').get_attribute('href').match(/[^\/]+$/)[0]
         end
       end
 

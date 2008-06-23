@@ -25,8 +25,8 @@ module Snowblink
         get_coming_up
       end
 
-      def get_coming_up
-        doc = Hpricot(open(@comingup_url))
+      def get_episodes(url)
+        doc = Hpricot(open(url))
         # create episodes and push into @episodes
 
         doc.search("ol.episodes").each do |episode_list|
@@ -36,7 +36,15 @@ module Snowblink
           end
         end
       end
-
+      
+      def get_coming_up
+        get_episodes(@comingup_url)
+      end
+      
+      def get_existing
+        get_episodes(@programme_url)
+      end
+      
       def update
         @episodes.each do |e|
           puts e
