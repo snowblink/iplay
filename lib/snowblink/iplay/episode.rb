@@ -10,8 +10,6 @@ module Snowblink
 
       attr_accessor :name, :pid, :end_time, :updated
       def initialize(series_name, details)
-        # @end_time specifies when the show is due to finish
-        # we should be able to download from iplayer after this time
         @series_name = series_name
         set_end_time(details)
         set_name_and_pid(details)
@@ -19,7 +17,8 @@ module Snowblink
       end
 
       def set_end_time(details)
-        @end_time = details.at('abbr.dtend').get_attribute('title')
+        # CHANGED as the BBC have changed the layout
+        @end_time = details.at('span.date').inner_text + ' ' + details.at('span.endtime').inner_text.sub(/^-/, '')
       end
 
       def set_name_and_pid(details)
