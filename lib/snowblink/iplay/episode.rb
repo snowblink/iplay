@@ -11,25 +11,28 @@ module Snowblink
       attr_accessor :name, :pid, :end_time, :updated
       def initialize(series_name, details)
         @series_name = series_name
-        set_end_time(details)
-        set_name_and_pid(details)
+        @details = details
+        set_end_time
+        set_name_and_pid
         @updated = false
       end
 
-      def set_end_time(details)
+      def set_end_time
         # CHANGED as the BBC have changed the layout
-        @end_time = details.at('span.date').inner_text + ' ' + details.at('span.endtime').inner_text.sub(/^-/, '')
+        @end_time = @details.at('span.date').inner_text + ' ' + @details.at('span.endtime').inner_text.sub(/^-/, '')
       end
 
-      def set_name_and_pid(details)
-        details.search('div.summary').each do |summary|
-          @name = [@series_name, summary.search('span.title').inner_text, summary.search('span.subtitle').inner_text].join(' - ')
+      def set_name_and_pid
+        @details.search('div.summary').each do |summary|
+          @name = [@series_name, summary.search('span.title').inner_text, summary.search('span.subtitle').inner_text].reject{|a| a =~ /^$/ }.join(' - ')
+
+          
           @pid = summary.at('a.url').get_attribute('href').match(/[^\/]+$/)[0]
         end
       end
 
       def to_s
-        "#{@name} (#{@pid}) finishes on telly at #{@end_time}"
+        "#{@name} (#{@pid}) finishes at #{@end_time}"
       end
 
       # check with iplayer recent if the show is available yet
@@ -51,7 +54,11 @@ module Snowblink
           false
         end
       end
-
+      
+      def iplayer_available?
+        !@details.search('div.availability').empty?
+      end
+      
       def aired?
         Time.now > Time.local(*ParseDate.parsedate(@end_time))
       end

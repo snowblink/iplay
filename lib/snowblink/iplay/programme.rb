@@ -48,10 +48,11 @@ module Snowblink
       def update
         @episodes.each do |e|
           puts e
-          if !e.updated? && e.iplayer_available?
+          # if !e.updated? && e.iplayer_available?
+          if e.iplayer_available?
             puts "Available!"
             @strategy.update(e)
-            e.updated
+            e.updated=true
           else
             puts "Not available yet!"
           end
