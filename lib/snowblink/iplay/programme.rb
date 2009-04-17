@@ -16,24 +16,36 @@ module Snowblink
       def initialize(pid, strategy=Strategy::Twitter.new)
         @pid = pid || 'b006q2x0' # default to Doctor Who!
         @programme_url = BBC_PROGRAMMES_URL + @pid    
-        @comingup_url = @programme_url + '/comingup'
+        @comingup_url = @programme_url # this is no longer consistent, so set it to the same as programme_url for the time being
         @episodes = []
         doc = Hpricot(open(@programme_url))
         @name = doc.at('h1').inner_text
         @strategy = strategy
 
-        get_coming_up
       end
 
       def get_episodes(url)
         doc = Hpricot(open(url))
+        return if doc.nil?
         # create episodes and push into @episodes
 
-        doc.search("ol.episodes").each do |episode_list|
-          episode_list.search("li").each do |episode_list_item|
-            episode = Episode.new(@name, episode_list_item)
-            @episodes << episode unless @episodes.any?{|ep| ep.pid == episode.pid}
-          end
+        # for tv shows
+        doc.search("a").each do |potential_episode|
+          pid_href = potential_episode.get_attribute('href')
+          next if pid_href.nil?
+          pid = pid_href.match(%r{^http://www.bbc.co.uk/iplayer/episode/([^/]+)$})
+          next if pid.nil?
+          episode = Episode.new(@name, nil)
+          episode.pid = pid[1]
+          @episodes << episode unless @episodes.any?{|ep| ep.pid == episode.pid}
+        end
+        
+        # for radio shows
+        doc.search("a.aod-link").each do |episode_link|
+          pid = episode_link.get_attribute('href').match(/[^\/]+$/)[0]
+          episode = Episode.new(@name, nil)
+          episode.pid = pid
+          @episodes << episode unless @episodes.any?{|ep| ep.pid == episode.pid}
         end
       end
       
@@ -71,3 +83,4 @@ module Snowblink
     end
   end
 end
+

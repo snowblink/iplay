@@ -12,8 +12,10 @@ module Snowblink
       def initialize(series_name, details)
         @series_name = series_name
         @details = details
-        set_end_time
-        set_name_and_pid
+        unless details.nil?
+          set_end_time
+          set_name_and_pid
+        end
         @updated = false
       end
 
@@ -55,9 +57,9 @@ module Snowblink
         end
       end
       
-      def iplayer_available?
-        !@details.search('div.availability').empty?
-      end
+      # def iplayer_available?
+      #   !@details.search('div.availability').empty?
+      # end
       
       def aired?
         Time.now > Time.local(*ParseDate.parsedate(@end_time))

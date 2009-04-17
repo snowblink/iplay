@@ -6,7 +6,7 @@ See `examples/check_doctor_who.rb` for an example.
 
 You need the brand pid for the show you want.
 This can be found by visiting:
-http://bbc.co.uk/programmes
+<http://bbc.co.uk/programmes>
 
 You can provide a different strategy to execute, by default it will tweet to the twitter account of your choice.
 
@@ -14,4 +14,4 @@ You can provide a different strategy to execute, by default it will tweet to the
 - Allow multiple strategies
 
 # License
-See LICENSE
+See `LICENSE`
