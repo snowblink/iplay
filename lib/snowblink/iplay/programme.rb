@@ -14,7 +14,10 @@ module Snowblink
       attr_accessor :pid, :episodes, :comingup_url
       
       def self.id_for(name)
-        a_z = "#{BBC_PROGRAMMES_URL}a-z/by/#{name[0,1].downcase}"
+        listing_page = name.scan(/^[^a-z0-9]*([a-z0-9])/i).flatten.first.downcase
+        listing_page = '@' if listing_page =~ /[0-9]/ 
+        
+        a_z = "#{BBC_PROGRAMMES_URL}a-z/by/#{listing_page}"
         doc = Hpricot(open(a_z))
         
         matches = doc.search("ol[@id='brands]//span[@class='title']..//a").select{|element| element.inner_text =~ /#{name}/i}
