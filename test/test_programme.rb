@@ -1,12 +1,31 @@
 require File.dirname(__FILE__) + '/test_helper'
 require 'snowblink/iplay'
+require 'ruby-debug'
 
 class ProgrammeTest < Test::Unit::TestCase
   
   def sample_file
-    File.dirname(__FILE__) + '/../comingup.xml'
+    File.dirname(__FILE__) + '/comingup.xml'
   end
-  
+
+  context "looking for a programme" do
+    setup do
+      listing = File.dirname(__FILE__) + '/lib/t_listing.html'
+      
+      Snowblink::Iplay::Programme.stubs(:open).returns(File.open(listing).read)
+    end
+    
+    should "be able to provide a programme id for a given title" do
+      titles = {  'Top Gear' => 'b006mj59', 
+                  'Test Match Special' => ['b00c67t1', 'b00fr0n5'], 
+                  'The show where Horne & Corden are put on a spike' => false }
+      
+      titles.each do |title, pid|
+        assert_equal pid, Snowblink::Iplay::Programme.id_for(title)
+      end
+    end
+  end
+
   context "a programme" do
     setup do
       @programme = Snowblink::Iplay::Programme.new(
