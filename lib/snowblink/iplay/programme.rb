@@ -12,6 +12,25 @@ module Snowblink
       UPDATE_INTERVAL = 300
 
       attr_accessor :pid, :episodes, :comingup_url
+      
+      def self.id_for(name)
+        listing_page = name.scan(/^[^a-z0-9]*([a-z0-9])/i).flatten.first.downcase
+        listing_page = '@' if listing_page =~ /[0-9]/ 
+        
+        a_z = "#{BBC_PROGRAMMES_URL}a-z/by/#{listing_page}"
+        doc = Hpricot(open(a_z))
+        
+        matches = doc.search("ol[@id='brands]//span[@class='title']..//a").select{|element| element.inner_text =~ /#{name}/i}
+
+        case matches.size
+        when 0
+          return false
+        when 1
+          return strip_pid(matches.first)
+        else
+          return matches.collect{|m| strip_pid(m)}
+        end
+      end
 
       def initialize(pid, strategy=Strategy::Twitter.new)
         @pid = pid || 'b006q2x0' # default to Doctor Who!
@@ -80,6 +99,10 @@ module Snowblink
         end
       end
       
+      private
+      def self.strip_pid(element)
+        element.attributes['href'].gsub('/programmes/', '')
+      end
     end
   end
 end
