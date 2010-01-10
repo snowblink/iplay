@@ -34,7 +34,7 @@ module Snowblink
       end
 
       def to_s
-        "#{@name} (#{@pid}) finishes at #{@end_time}"
+        "#{@name} (#{@pid})"
       end
 
       # check with iplayer recent if the show is available yet
