@@ -33,7 +33,10 @@ module Snowblink
       end
 
       def initialize(pid, strategy=Strategy::Twitter.new)
-        @pid = pid || 'b006q2x0' # default to Doctor Who!
+        raise "Could not find pid" if pid.nil? || pid == false
+
+        @pid = pid
+        
         @programme_url = BBC_PROGRAMMES_URL + @pid    
         @comingup_url = @programme_url # this is no longer consistent, so set it to the same as programme_url for the time being
         @episodes = []
