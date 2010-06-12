@@ -55,7 +55,7 @@ module Snowblink
         doc.search("a").each do |potential_episode|
           pid_href = potential_episode.get_attribute('href')
           next if pid_href.nil?
-          pid = pid_href.match(%r{^http://www.bbc.co.uk/iplayer/episode/([^/]+)$})
+          pid = pid_href.match(%r{^http://www.bbc.co.uk/.*/episode/([^/]+)$})
           next if pid.nil?
           episode = Episode.new(@name, nil)
           episode.pid = pid[1]
