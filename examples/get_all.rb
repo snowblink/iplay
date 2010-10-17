@@ -3,20 +3,32 @@
 require 'lib/snowblink/iplay'
 
 shows = [ 
-  # {:name => 'Miranda'},
+  {:name => 'Adam Buxton'},
   {:name => 'Adam and Joe', :pid => 'b00876k2'},
-  {:name => "Life", :pid => 'b00lbpcy'},
-  {:name => "Natural World", :pid => 'b006qnnh'},
+  {:name => 'Age of the Genome', :pid => 'b00ssmcp'},
   {:name => 'Andrew Marr', :pid => 'b00nrrff'},
-  {:name => 'Spooks', :pid => 'b006mf4b'},
-  {:name => 'Art Deco', :pid => 'b00nj89c'},
-  {:name => 'Ray Mears', :pid => 'b00nqhwl'},
-  {:name => 'James May', :pid => 'b00nqmlb'},
-  {:name => 'Mark Steel', :pid => 'b00d4b8b'},
+  {:name => 'Genius of Design'},
   {:name => 'Horizon', :pid => 'b006mgxf'},
-  {:name => 'Games Britannia'},
-  {:name => 'Hamlet'},
-  {:name => 'Doctor Who', :pid => 'b006q2x0'}
+  {:name => 'How to live a simple life'},
+  {:name => 'How to build'},
+  {:name => 'Imagine'},
+  {:name => "I'm sorry I"},
+  {:name => 'Life', :pid => 'b00lbpcy'},
+  {:name => 'Natural World', :pid => 'b006qnnh'},
+  {:name => "Nature's Great Events"},
+  {:name => 'Mongrels'},
+  {:name => 'Mrs Henderson'},
+  {:name => 'Museum of Curiosity'},
+  {:name => 'Pattern Recgonition'},
+  {:name => 'Pirates'},
+  {:name => 'Rev'},
+  {:name => "Richard Hammond's Engineering"},
+  {:name => 'QI'},
+  {:name => 'Sarah Millican', :pid => 'b00qps8m'},
+  {:name => 'Strictly Come Dancing', :pid => 'b006m8dq'},
+  {:name => 'Walk on by'},
+  {:name => 'Wild China'},
+  
 ]
    
 for show in shows do
