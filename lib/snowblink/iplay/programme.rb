@@ -18,22 +18,40 @@ module Snowblink
         listing_page = '@' if listing_page =~ /[0-9]/ 
         
         a_z = "#{BBC_PROGRAMMES_URL}a-z/by/#{listing_page}/player"
-        doc = Hpricot(open(a_z))
-        
-        matches = doc.search("ol[@id='brands]//span[@class='title']..//a").select{|element| element.inner_text =~ /#{name}/i}
 
-        case matches.size
-        when 0
+        # now is paginated
+        # ?page=blah
+
+        begin
+          while( doc = Hpricot(open(a_z)) ) do
+            # doc = Hpricot(open(a_z))
+            puts a_z
+            matches = doc.search("ol[@id='brands]//span[@class='title']..//a").select{|element| element.inner_text =~ /#{name}/i}
+
+            if a_z =~ /(.*\?page=)(\d+)$/
+              a_z = "#{$1}#{$2.to_i+1}"
+            else
+              a_z = a_z + "?page=2"
+            end
+
+            case matches.size
+            when 0
+              next
+            when 1
+              return strip_pid(matches.first)
+            else
+              return matches.collect{|m| strip_pid(m)}
+            end
+          end
+        rescue
           return false
-        when 1
-          return strip_pid(matches.first)
-        else
-          return matches.collect{|m| strip_pid(m)}
         end
+
+        return false
       end
 
       def initialize(pid, strategy=Strategy::Twitter.new)
-        raise "Could not find pid" if pid.nil? || pid == false
+        raise "could not find pid" if pid.nil? || pid == false
 
         @pid = pid
         
