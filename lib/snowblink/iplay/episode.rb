@@ -6,7 +6,7 @@ require 'parsedate'
 module Snowblink
   module Iplay
     class Episode
-      IPLAYER_URL = 'http://www.bbc.co.uk/iplayer/page/item/'
+      IPLAYER_URL = 'http://www.bbc.co.uk/iplayer/episode/'
 
       attr_accessor :name, :pid, :end_time, :updated
       def initialize(series_name, details)
@@ -50,7 +50,9 @@ module Snowblink
       
       def iplayer_available?
         begin
-          open("#{IPLAYER_URL}#{@pid}.shtml")
+          url = "#{IPLAYER_URL}#{@pid}"
+          puts "Trying #{url}"
+          open(url)
           true
         rescue
           false
