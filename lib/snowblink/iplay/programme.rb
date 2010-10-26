@@ -26,7 +26,7 @@ module Snowblink
           while( doc = Hpricot(open(a_z)) ) do
             # doc = Hpricot(open(a_z))
             puts a_z
-            matches = doc.search("ol[@id='brands]//span[@class='title']..//a").select{|element| element.inner_text =~ /#{name}/i}
+            matches = doc.search("span[@about]").select{|element| element.inner_text =~ /#{name}/i}
 
             if a_z =~ /(.*\?page=)(\d+)$/
               a_z = "#{$1}#{$2.to_i+1}"
@@ -122,7 +122,7 @@ module Snowblink
       
       private
       def self.strip_pid(element)
-        element.attributes['href'].gsub('/programmes/', '')
+        element.attributes['about'].match(/\/programmes\/([a-z0-9]+)/)[1]
       end
     end
   end
