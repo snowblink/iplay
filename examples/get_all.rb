@@ -13,6 +13,7 @@ shows = [
   {:name => 'How to build'},
   {:name => 'Imagine'},
   {:name => "I'm sorry I"},
+  {:name => 'James May'},
   {:name => 'Life', :pid => 'b00lbpcy'},
   {:name => 'Natural World', :pid => 'b006qnnh'},
   {:name => "Nature's Great Events"},
